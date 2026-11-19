@@ -27,13 +27,19 @@ jobs:
         with:
           gradle-version: '8.7'
 
+      - name: Extract project
+        run: |
+          unzip -q ClutchMaster-GitHub-Actions.zip -d project
+          ls -la project/ClutchMaster
+
       - name: Build mod
+        working-directory: project/ClutchMaster
         run: gradle --no-daemon clean build
 
       - name: Upload JAR
         uses: actions/upload-artifact@v4
         with:
           name: ClutchMaster-build
-          path: build/libs/*.jar
+          path: project/ClutchMaster/build/libs/*.jar
           if-no-files-found: error
           
